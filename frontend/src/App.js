@@ -1,10 +1,15 @@
-import './App.css';
+import './App.css'
+import { useState } from 'react'
+import WelcomePage from './welcomePage'
 
 function App() {
-  return (
-    <div className="App">
-    </div>
-  );
+  const [playerName, setPlayerName] = useState('')
+
+  if (!playerName) {
+    return (
+      <WelcomePage setPlayerName={setPlayerName} />
+    )
+  }
 }
 
-export default App;
+export default App
