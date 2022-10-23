@@ -2,6 +2,7 @@ import './App.css'
 import { useState } from 'react'
 import WelcomePage from './welcomePage'
 import JoinSessionPage from './joinSessionPage'
+import GamePage from './gamePage'
 import appService from './services'
 
 function App() {
@@ -22,7 +23,7 @@ function App() {
 
   if (!playerName) {
     return <WelcomePage setPlayerName={setPlayerName} />
-  } else {
+  } else if (!gameSessionNum) {
     return (
       <JoinSessionPage
         playerName={playerName}
@@ -30,6 +31,8 @@ function App() {
         joinSession={joinSession}
       />
     )
+  } else {
+    return <GamePage setGameSessionNum={setGameSessionNum} />
   }
 }
 
