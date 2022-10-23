@@ -1,6 +1,14 @@
 const router = require('express').Router()
 const data = require('./data')
 
+router.get('/', (req, res) => {
+  res.json(data.getAllSessions())
+})
+
+router.get('/available', (req, res) => {
+  res.json(data.getAllAvailableSessions())
+})
+
 router.post('/', (req, res) => {
   const sessionNumber = data.createSession(req.body.creatorName)
   res.status(201).json({ sessionNumber })

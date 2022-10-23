@@ -28,8 +28,29 @@ const getSession = (sessionNum) => {
   return sessions[sessionNum]
 }
 
+const getAllSessions = () => {
+  const res = []
+  for (const sessionNum in sessions) {
+    res.push({sessionNum, ...sessions[sessionNum]})
+  }
+  console.log(res)
+  return res
+}
+
+const getAllAvailableSessions = () => {
+  const res = []
+  for (const sessionNum in sessions) {
+    if (!sessions[sessionNum].playerTwoName) {
+      res.push({sessionNum, ...sessions[sessionNum]})
+    }
+  }
+  return res
+}
+
 module.exports = {
   createSession,
   joinSession,
   getSession,
+  getAllSessions,
+  getAllAvailableSessions,
 }
