@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import SelectSession from './SelectSession'
 
-const JoinSessionPage = ({ playerName, createSession }) => {
+const JoinSessionPage = ({ playerName, createSession, joinSession }) => {
   const handleCreateSession = () => createSession({ creatorName: playerName })
   const [isSelectingSession, setIsSelectingSession] = useState(false)
 
@@ -13,12 +13,19 @@ const JoinSessionPage = ({ playerName, createSession }) => {
           one?
         </p>
         <button onClick={handleCreateSession}>Create a Session</button>
-        <button onClick={() => setIsSelectingSession(true)}>Join a Session</button>
+        <button onClick={() => setIsSelectingSession(true)}>
+          Join a Session
+        </button>
       </div>
     )
   }
 
-  return <SelectSession setIsSelectingSession={setIsSelectingSession} />
+  return (
+    <SelectSession
+      setIsSelectingSession={setIsSelectingSession}
+      joinSession={joinSession}
+    />
+  )
 }
 
 export default JoinSessionPage

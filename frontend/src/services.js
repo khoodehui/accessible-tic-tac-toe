@@ -12,6 +12,11 @@ const getAvailableSessions = async () => {
   return response.data
 }
 
-const services = { createSession, getAvailableSessions }
+const joinSession = async (sessionNum, info) => {
+  const response = await axios.put(`${baseUrl}/${sessionNum}`, info)
+  return response.data
+}
+
+const services = { createSession, getAvailableSessions, joinSession }
 
 export default services

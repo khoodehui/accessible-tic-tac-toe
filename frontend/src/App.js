@@ -13,11 +13,21 @@ function App() {
     setGameSessionNum(sessionNum)
   }
 
+  const joinSession = async sessionNum => {
+    appService.joinSession(sessionNum, {playerName}).then(data => {
+      setGameSessionNum(sessionNum)
+    })
+  }
+
   if (!playerName) {
     return <WelcomePage setPlayerName={setPlayerName} />
   } else {
     return (
-      <JoinSessionPage playerName={playerName} createSession={createSession} />
+      <JoinSessionPage
+        playerName={playerName}
+        createSession={createSession}
+        joinSession={joinSession}
+      />
     )
   }
 }

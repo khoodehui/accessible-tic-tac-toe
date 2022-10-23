@@ -1,14 +1,16 @@
 import { useState, useEffect } from 'react'
-import services from '../services'
+import appService from '../services'
 
-const SelectSession = ({ setIsSelectingSession }) => {
+const SelectSession = ({ setIsSelectingSession, joinSession }) => {
   const [availableSessions, setAvailableSessions] = useState([])
 
   useEffect(() => {
-    services.getAvailableSessions().then(res => {
+    appService.getAvailableSessions().then(res => {
       setAvailableSessions(res)
     })
   }, [])
+
+  const handleJoinSession = sessionNum => () => joinSession(sessionNum)
 
   if (!availableSessions) {
     return 'loading'
@@ -20,7 +22,7 @@ const SelectSession = ({ setIsSelectingSession }) => {
       <ul>
         {availableSessions.map(s => (
           <li key={s.sessionNum}>
-            <button>
+            <button onClick={handleJoinSession(s.sessionNum)}>
               Session {s.sessionNum}
             </button>
           </li>
