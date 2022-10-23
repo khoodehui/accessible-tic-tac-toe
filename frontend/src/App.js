@@ -8,9 +8,10 @@ function App() {
   const [playerName, setPlayerName] = useState('')
   const [gameSessionNum, setGameSessionNum] = useState(null)
 
-  const createSession = async info => {
-    const sessionNum = await appService.createSession(info)
-    setGameSessionNum(sessionNum)
+  const createSession = info => {
+    appService.createSession(info).then(data => {
+      setGameSessionNum(data.sessionNumber)
+    })
   }
 
   const joinSession = async sessionNum => {
