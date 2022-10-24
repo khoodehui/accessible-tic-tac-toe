@@ -11,13 +11,13 @@ function App() {
 
   const createSession = info => {
     appService.createSession(info).then(data => {
-      setGameSessionNum(data.sessionNumber)
+      setGameSessionNum(Number(data.sessionNumber))
     })
   }
 
-  const joinSession = async sessionNum => {
-    appService.joinSession(sessionNum, {playerName}).then(data => {
-      setGameSessionNum(sessionNum)
+  const joinSession = sessionNum => {
+    appService.joinSession(sessionNum, { playerName }).then(data => {
+      setGameSessionNum(Number(sessionNum))
     })
   }
 
@@ -32,7 +32,12 @@ function App() {
       />
     )
   } else {
-    return <GamePage setGameSessionNum={setGameSessionNum} />
+    return (
+      <GamePage
+        gameSessionNum={gameSessionNum}
+        setGameSessionNum={setGameSessionNum}
+      />
+    )
   }
 }
 
