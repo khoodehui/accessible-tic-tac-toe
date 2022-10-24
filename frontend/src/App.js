@@ -23,6 +23,11 @@ function App() {
     })
   }
 
+  const leaveSession = sessionNum => {
+    setIsCreator(false)
+    setGameSessionNum(null)
+  }
+
   if (!playerName) {
     return <WelcomePage setPlayerName={setPlayerName} />
   } else if (!gameSessionNum) {
@@ -39,7 +44,7 @@ function App() {
         playerName={playerName}
         isCreator={isCreator}
         gameSessionNum={gameSessionNum}
-        setGameSessionNum={setGameSessionNum}
+        leaveSession={leaveSession}
       />
     )
   }

@@ -7,7 +7,7 @@ const GamePage = ({
   playerName,
   isCreator,
   gameSessionNum,
-  setGameSessionNum,
+  leaveSession,
 }) => {
   const [socket, setSocket] = useState(null)
   const [opponentName, setOpponentName] = useState(null)
@@ -75,7 +75,7 @@ const GamePage = ({
   if (isCreator && !opponentName) {
     return (
       <div>
-        <button onClick={() => setGameSessionNum(null)}>Exit</button>
+        <button onClick={() => leaveSession()}>Exit</button>
         <p aria-live='polite'>
           Session created. Waiting for a player to join...
         </p>
@@ -86,7 +86,7 @@ const GamePage = ({
   } else {
     return (
       <div>
-        <button onClick={() => setGameSessionNum(null)}>Exit</button>
+        <button onClick={() => leaveSession()}>Exit</button>
         {isCreator && <p aria-live='assertive'>A player has joined.</p>}
         <p aria-live='polite'>
           You are playing against {opponentName}. Your symbol is {playerSymbol}.
