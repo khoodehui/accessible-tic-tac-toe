@@ -19,6 +19,10 @@ const init = (server, options) => {
       }
     })
 
+    socket.on('square_click', ({ sessionNum, newSquares}) => {
+      socket.to(sessionNum).emit('fill_square', newSquares)
+    })
+
     socket.on('disconnect', () => {
       console.log('A user disconnected')
     })

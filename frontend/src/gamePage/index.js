@@ -11,6 +11,7 @@ const GamePage = ({
 }) => {
   const [socket, setSocket] = useState(null)
   const [opponentName, setOpponentName] = useState(null)
+  const [squares, setSquares] = useState(Array(9).fill(null))
 
   useEffect(() => {
     const newSocket = io.connect('http://localhost:3001')
@@ -29,10 +30,20 @@ const GamePage = ({
     socket.on('opponent_joined', opponent => {
       setOpponentName(opponent)
     })
+    socket.on('fill_square', newSquares => {
+      setSquares(newSquares)
+    })
   }, [socket])
 
-  const squares = Array(9).fill(null)
-  const handleSquareClick = i => () => socket.emit('square_click', i)
+  const handleSquareClick = i => () => {
+    const newSquares = [...squares]
+    newSquares[i] = isCreator ? 'X' : 'O'
+    setSquares(newSquares)
+    socket.emit('square_click', {
+      sessionNum: gameSessionNum,
+      newSquares: newSquares
+    })
+  }
 
   if (isCreator && !opponentName) {
     return (
@@ -51,7 +62,7 @@ const GamePage = ({
         <button onClick={() => setGameSessionNum(null)}>Exit</button>
         {isCreator && <p>A player has joined.</p>}
         <p>You are playing against {opponentName}.</p>
-        <Board squares={squares} handleSquareClick={handleSquareClick}/>
+        <Board squares={squares} handleSquareClick={handleSquareClick} />
       </div>
     )
   }
