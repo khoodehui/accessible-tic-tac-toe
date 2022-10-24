@@ -7,11 +7,13 @@ import appService from './services'
 
 function App() {
   const [playerName, setPlayerName] = useState('')
+  const [isCreator, setIsCreator] = useState(false)
   const [gameSessionNum, setGameSessionNum] = useState(null)
 
   const createSession = info => {
     appService.createSession(info).then(data => {
       setGameSessionNum(Number(data.sessionNumber))
+      setIsCreator(true)
     })
   }
 
@@ -34,6 +36,8 @@ function App() {
   } else {
     return (
       <GamePage
+        playerName={playerName}
+        isCreator={isCreator}
         gameSessionNum={gameSessionNum}
         setGameSessionNum={setGameSessionNum}
       />
