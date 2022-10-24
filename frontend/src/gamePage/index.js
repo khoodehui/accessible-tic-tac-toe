@@ -12,6 +12,9 @@ const GamePage = ({
   const [socket, setSocket] = useState(null)
   const [opponentName, setOpponentName] = useState(null)
   const [squares, setSquares] = useState(Array(9).fill(null))
+  const [isTurn, setIsTurn] = useState(isCreator)
+
+  const playerSymbol = isCreator ? 'X' : 'O'
 
   useEffect(() => {
     const newSocket = io.connect('http://localhost:3001')
@@ -32,17 +35,19 @@ const GamePage = ({
     })
     socket.on('fill_square', newSquares => {
       setSquares(newSquares)
+      setIsTurn(true)
     })
   }, [socket])
 
   const handleSquareClick = i => () => {
     const newSquares = [...squares]
-    newSquares[i] = isCreator ? 'X' : 'O'
+    newSquares[i] = playerSymbol
     setSquares(newSquares)
     socket.emit('square_click', {
       sessionNum: gameSessionNum,
-      newSquares: newSquares
+      newSquares: newSquares,
     })
+    setIsTurn(false)
   }
 
   if (isCreator && !opponentName) {
@@ -61,8 +66,19 @@ const GamePage = ({
       <div>
         <button onClick={() => setGameSessionNum(null)}>Exit</button>
         {isCreator && <p>A player has joined.</p>}
-        <p>You are playing against {opponentName}.</p>
-        <Board squares={squares} handleSquareClick={handleSquareClick} />
+        <p>
+          You are playing against {opponentName}. Your symbol is {playerSymbol}.
+        </p>
+        <p aria-live='polite'>
+          {isTurn
+            ? 'It\'s your turn. Please select a square to play.'
+            : 'It\'s your opponent\'s turn now. Please wait'}
+        </p>
+        <Board
+          isTurn={isTurn}
+          squares={squares}
+          handleSquareClick={handleSquareClick}
+        />
       </div>
     )
   }

@@ -1,8 +1,14 @@
 import Square from './Square'
 
-const Board = ({ squares, handleSquareClick }) => {
+const Board = ({ squares, handleSquareClick, isTurn }) => {
   const renderSquare = i => {
-    return <Square value={squares[i]} onClick={handleSquareClick(i)} />
+    return (
+      <Square
+        value={squares[i]}
+        onClick={handleSquareClick(i)}
+        isTurn={isTurn}
+      />
+    )
   }
 
   return (
