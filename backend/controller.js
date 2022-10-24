@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const data = require('./data')
+const { GameInfo } = require('./models')
 
 router.get('/', (req, res) => {
   res.json(data.getAllSessions())
@@ -7,6 +8,11 @@ router.get('/', (req, res) => {
 
 router.get('/available', (req, res) => {
   res.json(data.getAllAvailableSessions())
+})
+
+router.get('/past', async (req, res) => {
+  const pastGameInfo = await GameInfo.find({})
+  res.json(pastGameInfo)
 })
 
 router.post('/', (req, res) => {
