@@ -65,8 +65,8 @@ const GamePage = ({
     return (
       <div>
         <button onClick={() => setGameSessionNum(null)}>Exit</button>
-        {isCreator && <p>A player has joined.</p>}
-        <p>
+        {isCreator && <p aria-live='assertive'>A player has joined.</p>}
+        <p aria-live='polite'>
           You are playing against {opponentName}. Your symbol is {playerSymbol}.
         </p>
         <p aria-live='polite'>
