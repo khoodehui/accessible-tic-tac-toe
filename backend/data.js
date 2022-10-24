@@ -22,6 +22,7 @@ const createSession = creatorName => {
     playerOneMoves: new Set(),
     playerTwoName: null,
     playerTwoMoves: new Set(),
+    winnerName: null,
   }
   return curSessionNumber
 }
@@ -77,24 +78,26 @@ const checkIfWin = (sessionNum, playerNum) => {
   if (!sessions[sessionNum]) return
   if (playerNum !== 1 && playerNum !== 2) return
 
+  const session = sessions[sessionNum]
+
   const playerMoves =
-    playerNum === 1
-      ? sessions[sessionNum].playerOneMoves
-      : sessions[sessionNum].playerTwoMoves
+    playerNum === 1 ? session.playerOneMoves : session.playerTwoMoves
 
   if (playerMoves.size < 3) return false
 
   for (let i = 0; i < gameWinningLines.length; i++) {
     const [a, b, c] = gameWinningLines[i]
     if (playerMoves.has(a) && playerMoves.has(b) && playerMoves.has(c)) {
-      sessions[sessionNum].dateTimeCompleted = new Date().toISOString()
+      session.dateTimeCompleted = new Date().toISOString()
+      session.winnerName =
+        playerNum === 1 ? session.playerOneName : session.playerTwoName
       return true
     }
   }
   return false
 }
 
-const deleteSession = (sessionNum) => {
+const deleteSession = sessionNum => {
   if (!sessions[sessionNum]) return false
   delete sessions[sessionNum]
   return true
@@ -108,5 +111,5 @@ module.exports = {
   getAllAvailableSessions,
   recordMove,
   checkIfWin,
-  deleteSession
+  deleteSession,
 }

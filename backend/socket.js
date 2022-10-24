@@ -1,5 +1,6 @@
 const { Server } = require('socket.io')
 const data = require('./data')
+const { gameInfo } = require('./models')
 
 let io
 
@@ -27,6 +28,7 @@ const init = (server, options) => {
         data.recordMove(sessionNum, playerNum, clickedSquareNum)
         socket.to(sessionNum).emit('fill_square', newSquares)
         if (data.checkIfWin(sessionNum, playerNum)) {
+          
           socket.emit('win_game')
           socket.to(sessionNum).emit('lose_game')
         }

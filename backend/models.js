@@ -9,8 +9,9 @@ const gameInfoSchema = new mongoose.Schema({
   playerOneMoves: [Number],
   playerTwoName: String,
   playerTwoMoves: [Number],
+  winnerName: String,
 })
 
 const gameInfo = mongoose.model('GameInfo', gameInfoSchema)
 
-module.exports = gameInfo
+module.exports = { gameInfo }
