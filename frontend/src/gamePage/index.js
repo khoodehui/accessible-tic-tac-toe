@@ -3,12 +3,7 @@ import { useEffect, useState } from 'react'
 import io from 'socket.io-client'
 import Board from './Board'
 
-const GamePage = ({
-  playerName,
-  isCreator,
-  gameSessionNum,
-  leaveSession,
-}) => {
+const GamePage = ({ playerName, isCreator, gameSessionNum, leaveSession }) => {
   const [socket, setSocket] = useState(null)
   const [opponentName, setOpponentName] = useState(null)
   const [squares, setSquares] = useState(Array(9).fill(null))
@@ -64,7 +59,9 @@ const GamePage = ({
 
   const generateGameInfoText = () => {
     if (isGameOver) {
-      return isWinner ? 'You win!' : 'Your opponent has won the game.'
+      return `${
+        isWinner ? 'You win!' : 'Your opponent has won the game.'
+      } To leave the session, press the exit button on the top of the page.`
     } else {
       return isTurn
         ? "It's your turn. Please select a square to play."
@@ -87,16 +84,10 @@ const GamePage = ({
     return (
       <div>
         <button onClick={() => leaveSession()}>Exit</button>
-        {isCreator && <p aria-live='assertive'>A player has joined.</p>}
         <p aria-live='polite'>
-          You are playing against {opponentName}. Your symbol is {playerSymbol}.
+          You are playing against {opponentName}. Your symbol is {playerSymbol}
         </p>
-        <p aria-live='polite'>{generateGameInfoText()}</p>
-        {isGameOver && (
-          <p aria-live='polite'>
-            To leave the session, press the exit button at the top of this page.
-          </p>
-        )}
+        <p aria-live="polite" aria-atomic={true}>{generateGameInfoText()}</p>
         <Board
           isTurn={isTurn}
           squares={squares}
