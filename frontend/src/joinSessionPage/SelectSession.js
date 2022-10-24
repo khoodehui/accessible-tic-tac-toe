@@ -1,19 +1,38 @@
 import { useState, useEffect } from 'react'
 import appService from '../services'
 
-const SelectSession = ({ setIsSelectingSession, joinSession }) => {
-  const [availableSessions, setAvailableSessions] = useState([])
-
-  useEffect(() => {
-    appService.getAvailableSessions().then(res => {
-      setAvailableSessions(res)
-    })
-  }, [])
+const SelectSession = ({
+  handleCreateSession,
+  setIsSelectingSession,
+  joinSession,
+}) => {
+  const [availableSessions, setAvailableSessions] = useState(null)
 
   const handleJoinSession = sessionNum => () => joinSession(sessionNum)
 
-  if (!availableSessions) {
+  const handleGetAvailableSessions = () => {
+    appService.getAvailableSessions().then(res => {
+      setAvailableSessions(res)
+    })
+  }
+
+  useEffect(handleGetAvailableSessions, [])
+
+  if (availableSessions === null) {
     return 'loading'
+  }
+  if (availableSessions.length === 0) {
+    return (
+      <div>
+        <button onClick={() => setIsSelectingSession(false)}>Go Back</button>
+        <p aria-live='polite'>
+          No available sessions can be found. Would you like to create a session
+          or refresh the page?
+        </p>
+        <button onClick={handleCreateSession}>Create a Session</button>
+        <button onClick={handleGetAvailableSessions}>Refresh</button>
+      </div>
+    )
   }
   return (
     <div>

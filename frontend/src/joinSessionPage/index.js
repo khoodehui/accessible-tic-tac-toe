@@ -22,6 +22,7 @@ const JoinSessionPage = ({ playerName, createSession, joinSession }) => {
 
   return (
     <SelectSession
+      handleCreateSession={handleCreateSession}
       setIsSelectingSession={setIsSelectingSession}
       joinSession={joinSession}
     />
