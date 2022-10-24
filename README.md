@@ -81,3 +81,15 @@ Below is the list of HTTP APIs provided by the backend, as well as example reque
 - Instructional text on screen have been clearly worded so that users on a screen reader will be able to fully understand what to expect at a certain page in the application.
 - Since the application is dynamic in nature, measures have been taken to ensure that when there are changes occuring in the application, the user is informed (by use of the `aria-live` HTML attribute). For example, when there is a page changed, the main content of the next page will be read aloud by the screen reader. Another example is during the tic-tac-toe game itself, when player turns rotate, the screen reader will also read it aloud.
 - HTML elements have been carefully chosen to aid a user on a screen reader to better understand what is going on on a certain page. For example, the tic-tac-toe grid is designed using a table so that the screen reader can pinpoint where which cell of the grid a user is in. The properties of each cell in the tic-tac-toe grid also changes dynamically. For instance, a button is used for empty cells to denote that the user can click on it, while a div is used inside when the cell is filled or when the game is over, to allow the user to understand that they are not able to interact with it. When it is not the user's turn, the button in an empty cell is also dimmed (using `aria-disable`) so that they user knows that they are not able to press it currently, but can do so later on when it is their turn.
+
+## Assumptions
+Below are a list of assumptions made about the specifications of the assessment.
+- Players already know the rules of Tic-Tac-Toe
+- The server will only save data of completed games for future retrieval
+- Game sessions do not have to be persistent. That is, when the server closes, all sessions will be wiped
+- Players can create sessions themselves
+
+## Other notes
+Player moves during the game are recorded as indexes of the cells they select. The following diagram shows how indexes are allocated on the grid:
+
+![](./assets/12.png)
