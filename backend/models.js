@@ -1,8 +1,8 @@
 const mongoose = require('mongoose')
 
 const gameInfoSchema = new mongoose.Schema({
-  sessionNum: { type: Number, require: true, unique: true },
   dateTimeCreated: String,
+  sessionNum: Number,
   playerTwoJoinDateTime: String,
   dateTimeCompleted: String,
   playerOneName: String,
