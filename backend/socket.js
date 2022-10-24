@@ -15,13 +15,20 @@ const init = (server, options) => {
       socket.to(sessionNum).emit('opponent_joined', joinPlayerName)
       //emit creator name to the joiner of the session
       if (!isCreator) {
-        socket.emit('opponent_joined', data.getSession(sessionNum).playerOneName)
+        socket.emit(
+          'opponent_joined',
+          data.getSession(sessionNum).playerOneName
+        )
       }
     })
 
-    socket.on('square_click', ({ sessionNum, newSquares}) => {
-      socket.to(sessionNum).emit('fill_square', newSquares)
-    })
+    socket.on(
+      'square_click',
+      ({ sessionNum, isCreator, clickedSquareNum, newSquares }) => {
+        data.recordMove(sessionNum, isCreator ? 1 : 2, clickedSquareNum)
+        socket.to(sessionNum).emit('fill_square', newSquares)
+      }
+    )
 
     socket.on('disconnect', () => {
       console.log('A user disconnected')

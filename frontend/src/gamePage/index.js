@@ -45,6 +45,8 @@ const GamePage = ({
     setSquares(newSquares)
     socket.emit('square_click', {
       sessionNum: gameSessionNum,
+      isCreator,
+      clickedSquareNum: i,
       newSquares: newSquares,
     })
     setIsTurn(false)

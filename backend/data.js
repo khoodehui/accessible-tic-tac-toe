@@ -6,7 +6,9 @@ const createSession = creatorName => {
   sessions[curSessionNumber] = {
     dateCreated: new Date(),
     playerOneName: creatorName,
+    playerOneMoves: new Set(),
     playerTwoName: null,
+    playerTwoMoves: new Set()
   }
   return curSessionNumber
 }
@@ -47,10 +49,24 @@ const getAllAvailableSessions = () => {
   return res
 }
 
+const recordMove = (sessionNum, playerNum, squareNum) => {
+  if (!sessions[sessionNum]) return
+  if (playerNum === 1) {
+    sessions[sessionNum].playerOneMoves.add(squareNum)
+    console.log(sessions[sessionNum].playerOneMoves)
+  } else if (playerNum === 2) {
+    sessions[sessionNum].playerTwoMoves.add(squareNum)
+    console.log(sessions[sessionNum].playerTwoMoves)
+  } else {
+    return
+  }
+}
+
 module.exports = {
   createSession,
   joinSession,
   getSession,
   getAllSessions,
   getAllAvailableSessions,
+  recordMove,
 }
