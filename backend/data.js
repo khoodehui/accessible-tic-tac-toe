@@ -102,6 +102,17 @@ const checkIfWin = (sessionNum, playerNum) => {
   return false
 }
 
+const checkIfBoardFilled = sessionNum => {
+  const session = sessions[sessionNum]
+  const totalMoves =
+    session.playerOneMoves.length + session.playerTwoMoves.length
+  if (totalMoves < 9) return false
+  session.dateTimeCompleted = new Date().toISOString()
+  const gameInfo = new GameInfo({ sessionNum, ...session, winnerName: 'none' })
+  gameInfo.save()
+  return true
+}
+
 const deleteSession = sessionNum => {
   if (!sessions[sessionNum]) return false
   delete sessions[sessionNum]
@@ -116,5 +127,6 @@ module.exports = {
   getAllAvailableSessions,
   recordMove,
   checkIfWin,
+  checkIfBoardFilled,
   deleteSession,
 }

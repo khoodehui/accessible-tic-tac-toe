@@ -31,6 +31,10 @@ const init = (server, options) => {
           
           socket.emit('win_game')
           socket.to(sessionNum).emit('lose_game')
+          return
+        }
+        if (data.checkIfBoardFilled(sessionNum)) {
+          io.to(sessionNum).emit('draw_game')
         }
       }
     )

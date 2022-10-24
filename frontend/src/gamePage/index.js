@@ -42,6 +42,9 @@ const GamePage = ({ playerName, isCreator, gameSessionNum, leaveSession }) => {
       setIsGameOver(true)
       setIsWinner(false)
     })
+    socket.on('draw_game', () => {
+      setIsGameOver(true)
+    })
   }, [socket])
 
   const handleSquareClick = i => () => {
@@ -60,7 +63,11 @@ const GamePage = ({ playerName, isCreator, gameSessionNum, leaveSession }) => {
   const generateGameInfoText = () => {
     if (isGameOver) {
       return `${
-        isWinner ? 'You win!' : 'Your opponent has won the game.'
+        isWinner === null
+          ? "It's a draw."
+          : isWinner
+          ? 'You win!'
+          : 'Your opponent has won the game.'
       } To leave the session, press the exit button on the top of the page.`
     } else {
       return isTurn
@@ -87,7 +94,9 @@ const GamePage = ({ playerName, isCreator, gameSessionNum, leaveSession }) => {
         <p aria-live='polite'>
           You are playing against {opponentName}. Your symbol is {playerSymbol}
         </p>
-        <p aria-live="polite" aria-atomic={true}>{generateGameInfoText()}</p>
+        <p aria-live='polite' aria-atomic={true}>
+          {generateGameInfoText()}
+        </p>
         <Board
           isTurn={isTurn}
           squares={squares}
