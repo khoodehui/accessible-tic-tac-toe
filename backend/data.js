@@ -91,6 +91,12 @@ const checkIfWin = (sessionNum, playerNum) => {
   return false
 }
 
+const deleteSession = (sessionNum) => {
+  if (!sessions[sessionNum]) return false
+  delete sessions[sessionNum]
+  return true
+}
+
 module.exports = {
   createSession,
   joinSession,
@@ -99,4 +105,5 @@ module.exports = {
   getAllAvailableSessions,
   recordMove,
   checkIfWin,
+  deleteSession
 }

@@ -20,7 +20,22 @@ router.put('/:sessionNum', (req, res) => {
   if (isJoinSuccessful) {
     res.json(data.getSession(sessionNum))
   } else {
-    res.status(404).json({ error: "Cannot join the session. Either the session does not exist or it is already full."})
+    res
+      .status(404)
+      .json({
+        error:
+          'Cannot join the session. Either the session does not exist or it is already full.',
+      })
+  }
+})
+
+router.delete('/:sessionNum', (req, res) => {
+  const sessionNum = req.params.sessionNum
+  const isSuccessful = data.deleteSession(sessionNum)
+  if (isSuccessful) {
+    res.status(204).end()
+  } else {
+    res.status(404).json({error: 'Session with given number does not exist.'})
   }
 })
 
