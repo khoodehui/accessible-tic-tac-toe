@@ -15,7 +15,7 @@ const gameWinningLines = [
 const createSession = creatorName => {
   curSessionNumber++
   sessions[curSessionNumber] = {
-    dateTimeCreated: new Date(),
+    dateTimeCreated: new Date().toISOString(),
     playerTwoJoinDateTime: null,
     dateTimeCompleted: null,
     playerOneName: creatorName,
@@ -36,7 +36,7 @@ const joinSession = (sessionNum, playerName) => {
     return false
   }
   sessions[sessionNum].playerTwoName = playerName
-  sessions[sessionNum].playerTwoJoinDateTime = new Date()
+  sessions[sessionNum].playerTwoJoinDateTime = new Date().toISOString()
   return true
 }
 
@@ -87,8 +87,7 @@ const checkIfWin = (sessionNum, playerNum) => {
   for (let i = 0; i < gameWinningLines.length; i++) {
     const [a, b, c] = gameWinningLines[i]
     if (playerMoves.has(a) && playerMoves.has(b) && playerMoves.has(c)) {
-      sessions[sessionNum].dateTimeCompleted = new Date()
-      console.log(sessions[sessionNum])
+      sessions[sessionNum].dateTimeCompleted = new Date().toISOString()
       return true
     }
   }
