@@ -8,7 +8,7 @@
 1. After following these steps, the application should be good to go.
 
 ## Testing demo
-1. Please refer to the link attach in the submission email.
+Please refer to the link attach in the submission email.
 
 ## Playing the game on multiple instances
 1. The game can be played using multiple browser sessions or even multiple tabs in a single browser session. In either methods, navigate to `http://localhost:3000` on each browser session/tab.
@@ -71,6 +71,7 @@ Below is the list of HTTP APIs provided by the backend, as well as example reque
         ![](./assets/10.png)
 
      - Example response (failed):
+        
         ![](./assets/11.png)
 
 ## Design Considerations
