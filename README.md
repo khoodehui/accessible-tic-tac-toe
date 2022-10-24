@@ -7,10 +7,14 @@
 1. To start the frontend application, run `npm start` in the frontend package.
 1. After following these steps, the application should be good to go.
 
+## Testing demo
+1. Please refer to the link attach in the submission email.
+
 ## Playing the game on multiple instances
 1. The game can be played using multiple browser sessions or even multiple tabs in a single browser session. In either methods, navigate to `http://localhost:3000` on each browser session/tab.
 1. After entering the player's name, you will be able to create or join game sessions in the next page, which looks like this:
-![Create or join session page](./assets/1.png)
+
+    ![](./assets/1.png)
 1. When two 'players' are in the same room, the game will start.
 
 ## List of APIs
