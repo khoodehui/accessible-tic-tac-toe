@@ -4,7 +4,7 @@ let curSessionNumber = 0
 const createSession = creatorName => {
   curSessionNumber++
   sessions[curSessionNumber] = {
-    dateCreated: new Date(),
+    dateTimeCreated: new Date(),
     playerOneName: creatorName,
     playerOneMoves: new Set(),
     playerTwoName: null,
@@ -23,6 +23,7 @@ const joinSession = (sessionNum, playerName) => {
     return false
   }
   sessions[sessionNum].playerTwoName = playerName
+  sessions[sessionNum].playerTwoJoinDateTime = new Date()
   return true
 }
 
