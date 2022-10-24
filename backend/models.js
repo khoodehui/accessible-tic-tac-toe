@@ -12,6 +12,6 @@ const gameInfoSchema = new mongoose.Schema({
   winnerName: String,
 })
 
-const gameInfo = mongoose.model('GameInfo', gameInfoSchema)
+const GameInfo = mongoose.model('GameInfo', gameInfoSchema)
 
-module.exports = { gameInfo }
+module.exports = { GameInfo }

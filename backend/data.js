@@ -1,3 +1,5 @@
+const { GameInfo } = require('./models')
+
 const sessions = {}
 let curSessionNumber = 0
 
@@ -19,9 +21,9 @@ const createSession = creatorName => {
     playerTwoJoinDateTime: null,
     dateTimeCompleted: null,
     playerOneName: creatorName,
-    playerOneMoves: new Set(),
+    playerOneMoves: [],
     playerTwoName: null,
-    playerTwoMoves: new Set(),
+    playerTwoMoves: [],
     winnerName: null,
   }
   return curSessionNumber
@@ -66,9 +68,9 @@ const getAllAvailableSessions = () => {
 const recordMove = (sessionNum, playerNum, squareNum) => {
   if (!sessions[sessionNum]) return
   if (playerNum === 1) {
-    sessions[sessionNum].playerOneMoves.add(squareNum)
+    sessions[sessionNum].playerOneMoves.push(squareNum)
   } else if (playerNum === 2) {
-    sessions[sessionNum].playerTwoMoves.add(squareNum)
+    sessions[sessionNum].playerTwoMoves.push(squareNum)
   } else {
     return
   }
@@ -80,8 +82,9 @@ const checkIfWin = (sessionNum, playerNum) => {
 
   const session = sessions[sessionNum]
 
-  const playerMoves =
+  const playerMoves = new Set(
     playerNum === 1 ? session.playerOneMoves : session.playerTwoMoves
+  )
 
   if (playerMoves.size < 3) return false
 
@@ -91,6 +94,8 @@ const checkIfWin = (sessionNum, playerNum) => {
       session.dateTimeCompleted = new Date().toISOString()
       session.winnerName =
         playerNum === 1 ? session.playerOneName : session.playerTwoName
+      const gameInfo = new GameInfo({ sessionNum, ...session })
+      gameInfo.save()
       return true
     }
   }
