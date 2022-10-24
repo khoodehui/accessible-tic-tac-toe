@@ -16,6 +16,8 @@ const createSession = creatorName => {
   curSessionNumber++
   sessions[curSessionNumber] = {
     dateTimeCreated: new Date(),
+    playerTwoJoinDateTime: null,
+    dateTimeCompleted: null,
     playerOneName: creatorName,
     playerOneMoves: new Set(),
     playerTwoName: null,
@@ -85,6 +87,8 @@ const checkIfWin = (sessionNum, playerNum) => {
   for (let i = 0; i < gameWinningLines.length; i++) {
     const [a, b, c] = gameWinningLines[i]
     if (playerMoves.has(a) && playerMoves.has(b) && playerMoves.has(c)) {
+      sessions[sessionNum].dateTimeCompleted = new Date()
+      console.log(sessions[sessionNum])
       return true
     }
   }
