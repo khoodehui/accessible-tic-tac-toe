@@ -25,8 +25,13 @@ const init = (server, options) => {
     socket.on(
       'square_click',
       ({ sessionNum, isCreator, clickedSquareNum, newSquares }) => {
-        data.recordMove(sessionNum, isCreator ? 1 : 2, clickedSquareNum)
+        const playerNum = isCreator ? 1 : 2
+        data.recordMove(sessionNum, playerNum, clickedSquareNum)
         socket.to(sessionNum).emit('fill_square', newSquares)
+        if (data.checkIfWin(sessionNum, playerNum)) {
+          socket.emit('win_game')
+          socket.to(sessionNum).emit('lose_game')
+        }
       }
     )
 
