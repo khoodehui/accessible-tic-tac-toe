@@ -13,6 +13,8 @@ const GamePage = ({
   const [opponentName, setOpponentName] = useState(null)
   const [squares, setSquares] = useState(Array(9).fill(null))
   const [isTurn, setIsTurn] = useState(isCreator)
+  const [isGameOver, setIsGameOver] = useState(false)
+  const [isWinner, setIsWinner] = useState(null)
 
   const playerSymbol = isCreator ? 'X' : 'O'
 
@@ -37,6 +39,14 @@ const GamePage = ({
       setSquares(newSquares)
       setIsTurn(true)
     })
+    socket.on('win_game', () => {
+      setIsGameOver(true)
+      setIsWinner(true)
+    })
+    socket.on('lose_game', () => {
+      setIsGameOver(true)
+      setIsWinner(false)
+    })
   }, [socket])
 
   const handleSquareClick = i => () => {
@@ -50,6 +60,16 @@ const GamePage = ({
       newSquares: newSquares,
     })
     setIsTurn(false)
+  }
+
+  const generateGameInfoText = () => {
+    if (isGameOver) {
+      return isWinner ? 'You win!' : 'Your opponent has won the game.'
+    } else {
+      return isTurn
+        ? "It's your turn. Please select a square to play."
+        : "It's your opponent's turn now. Please wait."
+    }
   }
 
   if (isCreator && !opponentName) {
@@ -71,14 +91,16 @@ const GamePage = ({
         <p aria-live='polite'>
           You are playing against {opponentName}. Your symbol is {playerSymbol}.
         </p>
-        <p aria-live='polite'>
-          {isTurn
-            ? 'It\'s your turn. Please select a square to play.'
-            : 'It\'s your opponent\'s turn now. Please wait'}
-        </p>
+        <p aria-live='polite'>{generateGameInfoText()}</p>
+        {isGameOver && (
+          <p aria-live='polite'>
+            To leave the session, press the exit button at the top of this page.
+          </p>
+        )}
         <Board
           isTurn={isTurn}
           squares={squares}
+          isGameOver={isGameOver}
           handleSquareClick={handleSquareClick}
         />
       </div>
