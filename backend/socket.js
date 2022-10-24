@@ -7,8 +7,6 @@ const init = (server, options) => {
   io = new Server(server, options)
 
   io.on('connection', socket => {
-    console.log('A user connected')
-
     socket.on('join_session', ({ sessionNum, joinPlayerName, isCreator }) => {
       socket.join(sessionNum)
       //emit joiner name to the creator of the session
@@ -34,10 +32,6 @@ const init = (server, options) => {
         }
       }
     )
-
-    socket.on('disconnect', () => {
-      console.log('A user disconnected')
-    })
   })
 }
 

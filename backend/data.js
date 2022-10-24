@@ -47,7 +47,6 @@ const getAllSessions = () => {
   for (const sessionNum in sessions) {
     res.push({ sessionNum, ...sessions[sessionNum] })
   }
-  console.log(res)
   return res
 }
 
@@ -65,10 +64,8 @@ const recordMove = (sessionNum, playerNum, squareNum) => {
   if (!sessions[sessionNum]) return
   if (playerNum === 1) {
     sessions[sessionNum].playerOneMoves.add(squareNum)
-    console.log(sessions[sessionNum].playerOneMoves)
   } else if (playerNum === 2) {
     sessions[sessionNum].playerTwoMoves.add(squareNum)
-    console.log(sessions[sessionNum].playerTwoMoves)
   } else {
     return
   }
